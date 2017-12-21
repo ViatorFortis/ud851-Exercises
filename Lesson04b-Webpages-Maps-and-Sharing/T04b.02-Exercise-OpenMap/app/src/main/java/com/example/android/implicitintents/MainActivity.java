@@ -49,13 +49,15 @@ public class MainActivity extends AppCompatActivity {
      */
     public void onClickOpenAddressButton(View v) {
         // TODO (5) Store an address in a String
-        String addressString = "600 Independence Ave SW, Washington, DC 20560";
+        String addressString = //"Mountain View";
+                "2 Lincoln Memorial Cir NW, Washington";
+                //"600 Independence Ave SW, Washington, DC 20560";
 
         // TODO (6) Use Uri.Builder with the appropriate scheme and query to form the Uri for the address
         Uri.Builder uriBuidler = new Uri.Builder();
         uriBuidler.scheme("geo")
                     .path("0,0")
-                    .query(addressString);
+                    .appendQueryParameter("q", addressString);
 
         Uri uri = uriBuidler.build();
 
