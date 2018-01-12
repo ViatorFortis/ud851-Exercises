@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:anddroid="http://schemas.android.com/apk/res-auto"
     package="com.example.android.todolist">
 
     <application
@@ -28,6 +29,10 @@
         <!-- TODO (3) Register the TaskContentProvider -->
         <!-- TODO (4) Set name, authorities, and exported attributes -->
         <!-- exported = false limits access to this ContentProvider to only this app -->
+        <provider
+            android:authorities="com.example.android.todolist"
+        android:name="com.example.android.todolist.data.TaskContentProvider"
+        android:exported="false" />
 
     </application>
 
