@@ -15,8 +15,46 @@
  */
 package com.example.android.background.sync;
 
-public class WaterReminderFirebaseJobService {
+import android.content.Context;
+import android.os.AsyncTask;
+
+import com.firebase.jobdispatcher.JobService;
+import com.firebase.jobdispatcher.JobParameters;
+
+public class WaterReminderFirebaseJobService extends JobService {
+    private AsyncTask mBackgroundTask;
+
+    @Override
+    public boolean onStartJob(final JobParameters params) {
+        mBackgroundTask = new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] objects) {
+                Context context = WaterReminderFirebaseJobService.this;
+                ReminderTasks.executeTask(context, ReminderTasks.ACTION_CHARGING_REMINDER);
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                jobFinished(params, false);
+            }
+        };
+
+        mBackgroundTask.execute();
+        return false;
+    }
+
+    @Override
+    public boolean onStopJob(JobParameters params) {
+        if (mBackgroundTask != null) {
+            mBackgroundTask.cancel(true);
+        }
+
+        return true;
+    }
     // TODO (3) WaterReminderFirebaseJobService should extend from JobService
+
 
     // TODO (4) Override onStartJob
         // TODO (5) By default, jobs are executed on the main thread, so make an anonymous class extending
